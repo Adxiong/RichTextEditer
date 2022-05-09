@@ -1,45 +1,32 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+/*
+ * @Description:
+ * @version:
+ * @Author: Adxiong
+ * @Date: 2022-05-09 23:00:09
+ * @LastEditors: Adxiong
+ * @LastEditTime: 2022-05-09 23:24:40
+ */
+import { useState } from 'react';
+import './App.css';
+import 'draft-js/dist/Draft.css';
+import { Editor, EditorState, EditorProps } from 'draft-js';
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
+  const editorChange = (editorState: EditorState) => {
+    setEditorState(editorState);
+  };
+  const render = () => {
+    console.log(editorState);
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+      <Editor editorState={editorState} onChange={editorChange}></Editor>
+      <button onClick={render}>渲染</button>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
