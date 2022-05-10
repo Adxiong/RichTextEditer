@@ -4,35 +4,27 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:00:09
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-09 23:51:52
+ * @LastEditTime: 2022-05-10 23:00:09
  */
-import { useState } from 'react';
 import './App.css';
-import 'draft-js/dist/Draft.css';
-import {
-  Editor,
-  EditorState,
-  EditorProps,
-  convertFromHTML,
-  convertFromRaw,
-} from 'draft-js';
-import HeadControls from './components/headControls/HeadControls';
+import Editor from './components/Editor/Editor';
 
 function App() {
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
-  );
-  const editorChange = (editorState: EditorState) => {
-    setEditorState(editorState);
+  const toolbar = {
+    bold: {
+      fontWeight: 'bold',
+    },
+    italic: {
+      fontStyle: 'italic',
+    },
+    red: {
+      color: 'red',
+    },
   };
-  const render = () => {
-    console.log(editorState.getCurrentContent());
-  };
+
   return (
     <div className="App">
-      <HeadControls></HeadControls>
-      <Editor editorState={editorState} onChange={editorChange}></Editor>
-      <button onClick={render}>渲染</button>
+      <Editor toolbar={toolbar}></Editor>
     </div>
   );
 }
