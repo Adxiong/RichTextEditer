@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:46:29
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-10 17:34:46
+ * @LastEditTime: 2022-05-10 23:55:34
  */
 import { DraftStyleMap } from 'draft-js';
 import React, { ReactPropTypes } from 'react';
@@ -12,30 +12,36 @@ import style from './styles/index.module.less';
 
 interface Props {
   onClick: (key: string) => void;
-  toolbar?: DraftStyleMap;
+  toolbar?: Record<string, any>;
 }
-const toolbar: DraftStyleMap = {
-  bold: {
-    fontWeight: 'bold',
-  },
-  italic: {
-    fontStyle: 'italic',
-  },
-  red: {
-    color: 'red',
-  },
-};
+
 const HeadControls = (props: Props) => {
+  const toolbar = props.toolbar || {
+    bold: {
+      icon: 'icon-01jiacu',
+      title: '粗体',
+    },
+    italic: {
+      icon: 'I',
+      title: '斜体',
+    },
+    red: {
+      icon: '👀',
+      title: '颜色',
+    },
+  };
+
   return (
     <div id={style.headControls}>
-      {Object.keys(props.toolbar || toolbar).map((key) => (
+      {Object.keys(toolbar).map((key) => (
         <span
+          title={toolbar[key].title}
           key={key}
           onClick={() => {
             props.onClick(key);
           }}
         >
-          {key}｜
+          <i className={['iconfont', toolbar[key].icon].join(' ')}></i>|
         </span>
       ))}
     </div>

@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-10 11:25:41
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-10 17:30:07
+ * @LastEditTime: 2022-05-10 23:44:45
  */
 
 import {
@@ -18,9 +18,16 @@ import 'draft-js/dist/Draft.css';
 import ToolBar from '../ToolBar/ToolBar';
 
 interface Props {
-  toolbar?: DraftStyleMap;
+  toolbar?: Record<string, any>;
 }
-
+const customStyleMap = {
+  bold: {
+    fontWeight: 'bold',
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
+};
 const Editor = (props: Props) => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
@@ -37,7 +44,7 @@ const Editor = (props: Props) => {
       <ToolBar toolbar={props.toolbar} onClick={handleControlClick}></ToolBar>
       <DraftEditor
         editorState={editorState}
-        customStyleMap={props.toolbar}
+        customStyleMap={customStyleMap}
         onChange={editorChange}
       ></DraftEditor>
     </div>
