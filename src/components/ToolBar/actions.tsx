@@ -4,10 +4,20 @@
  * @Author: Adxiong
  * @Date: 2022-05-11 16:18:33
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-11 17:56:12
+ * @LastEditTime: 2022-05-11 23:45:49
  */
 
 const actions: Record<string, any> = {
+  undo: {
+    type: 'command',
+    icon: 'icon-25chehui',
+    title: '撤回',
+  },
+  redo: {
+    type: 'command',
+    icon: 'icon-26quxiaochehui',
+    title: '取消撤回',
+  },
   bold: {
     type: 'inline',
     icon: 'icon-01jiacu',

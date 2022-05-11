@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-10 11:25:41
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-11 23:41:53
+ * @LastEditTime: 2022-05-12 00:07:48
  */
 
 import {
@@ -13,10 +13,15 @@ import {
   DraftStyleMap,
   RichUtils,
 } from 'draft-js';
-import { BaseSyntheticEvent, ReactPropTypes, useState } from 'react';
+import {
+  BaseSyntheticEvent,
+  KeyboardEvent,
+  ReactPropTypes,
+  useRef,
+  useState,
+} from 'react';
 import 'draft-js/dist/Draft.css';
 import ToolBar from '../ToolBar/ToolBar';
-import { Input } from 'antd';
 import Header from '../Header/Header';
 
 interface Props {
@@ -24,7 +29,12 @@ interface Props {
 }
 const customStyleMap: Record<string, any> = {};
 
-const DraftInlineStyleTypeMap: Record<string, any> = {
+const DraftCommandMap: Record<string, string> = {
+  undo: 'undo',
+  redo: 'redo',
+};
+
+const DraftInlineStyleTypeMap: Record<string, string> = {
   bold: 'BOLD',
   italic: 'ITALIC',
   strikethrough: 'STRIKETHROUGH',
@@ -32,7 +42,7 @@ const DraftInlineStyleTypeMap: Record<string, any> = {
   code: 'CODE',
 };
 
-const DraftBlockStyleTypeMap: Record<string, any> = {
+const DraftBlockStyleTypeMap: Record<string, string> = {
   //块级
   heading1: 'header-one',
   heading2: 'header-two',
@@ -50,6 +60,7 @@ const DraftBlockStyleTypeMap: Record<string, any> = {
 };
 
 const Editor = (props: Props) => {
+  const editorRef = useRef<DraftEditor>(null);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
@@ -66,6 +77,8 @@ const Editor = (props: Props) => {
         return setEditorState(
           RichUtils.toggleBlockType(editorState, DraftBlockStyleTypeMap[key])
         );
+      case 'command':
+        return setEditorState(EditorState[DraftCommandMap[key]](editorState));
     }
   };
   const handleKeyCommand = (command: string) => {
@@ -80,16 +93,21 @@ const Editor = (props: Props) => {
   const handleHeaderChange = (e: BaseSyntheticEvent) => {
     console.log(e.target.value);
   };
+  const handleTab = (event: KeyboardEvent) => {
+    setEditorState(RichUtils.onTab(event, editorState, 2));
+  };
   return (
     <div>
       <Header defaultValue="[无标题]" onChange={handleHeaderChange}></Header>
       <ToolBar toolbar={props.toolbar} onClick={handleControlClick}></ToolBar>
       <DraftEditor
+        ref={editorRef}
         editorState={editorState}
         placeholder={'请输入内容......'}
         handleKeyCommand={handleKeyCommand}
         // customStyleMap={customStyleMap}
         onChange={editorChange}
+        onTab={handleTab}
       ></DraftEditor>
     </div>
   );
