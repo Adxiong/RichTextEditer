@@ -4,26 +4,36 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:00:09
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-10 23:56:24
+ * @LastEditTime: 2022-05-11 17:55:49
  */
 import './App.css';
 import Editor from './components/Editor/Editor';
 
 function App() {
-  const toolbar = {
-    bold: {
-      icon: 'icon-01jiacu',
-      title: '粗体',
-    },
-    italic: {
-      icon: 'I',
-      title: '斜体',
-    },
-    red: {
-      icon: '👀',
-      title: '颜色',
-    },
-  };
+  const toolbar = [
+    'bold', //加粗
+    'italic', //斜体
+    'undo', //撤销
+    'redo', //重做
+    'indent', //首行缩进
+    'underline', //下划线
+    'strikethrough', //删除线
+    'heading1', //标题1
+    'heading2', //标题2
+    'heading3', //标题3
+    'heading4', //标题4
+    'heading5', //标题5
+    'heading6', //标题6
+    'unstyled', //无样式
+    'paragraph', //段落
+    'ol', //有序列表项
+    'ul', //无序列表项
+    // 'blockquote', //块引用
+    // 'atomic', //原子
+    'line',
+    'link',
+    'image',
+  ];
 
   return (
     <div className="App">

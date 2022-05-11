@@ -4,46 +4,59 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:46:29
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-10 23:55:34
+ * @LastEditTime: 2022-05-11 17:51:50
  */
 import { DraftStyleMap } from 'draft-js';
 import React, { ReactPropTypes } from 'react';
+import PickerColor from '../PickerColor/PickerColor';
 import style from './styles/index.module.less';
+import actions from './actions';
 
 interface Props {
-  onClick: (key: string) => void;
-  toolbar?: Record<string, any>;
+  onClick: (key: string, type: string) => void;
+  toolbar?: string[];
 }
 
 const HeadControls = (props: Props) => {
-  const toolbar = props.toolbar || {
-    bold: {
-      icon: 'icon-01jiacu',
-      title: '粗体',
-    },
-    italic: {
-      icon: 'I',
-      title: '斜体',
-    },
-    red: {
-      icon: '👀',
-      title: '颜色',
-    },
-  };
+  const toolbar = props.toolbar
+    ? props.toolbar.map((key: string) => {
+        if (actions[key])
+          return (
+            <span
+              className={['iconfont', style.utilsItem, actions[key].icon].join(
+                ' '
+              )}
+              title={actions[key].title}
+              key={key}
+              onClick={() => {
+                props.onClick(key, actions[key].type);
+              }}
+            >
+              |
+            </span>
+          );
+      })
+    : Object.keys(actions).map((key: string) => {
+        return (
+          <span
+            className={['iconfont', style.utilsItem, actions[key].icon].join(
+              ' '
+            )}
+            title={actions[key].title}
+            key={key}
+            onClick={() => {
+              props.onClick(key, actions[key].type);
+            }}
+          >
+            |
+          </span>
+        );
+      });
 
   return (
     <div id={style.headControls}>
-      {Object.keys(toolbar).map((key) => (
-        <span
-          title={toolbar[key].title}
-          key={key}
-          onClick={() => {
-            props.onClick(key);
-          }}
-        >
-          <i className={['iconfont', toolbar[key].icon].join(' ')}></i>|
-        </span>
-      ))}
+      {toolbar}
+      {/* <PickerColor></PickerColor> */}
     </div>
   );
 };

@@ -4,9 +4,13 @@
 .App {
 }
 
-.DraftEditor-root {
+.App .DraftEditor-root {
   width: 80%;
   margin: auto;
-  min-height: 6em;
+  padding: 10px;
+  box-sizing: border-box;
+  height: calc( 100vh - 140px );
+  overflow-x: hidden;
+  overflow-y: auto;
   border: 1px solid #000;
 }
