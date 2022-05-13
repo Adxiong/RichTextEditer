@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:46:29
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-13 23:03:30
+ * @LastEditTime: 2022-05-13 23:46:07
  */
 import { DraftStyleMap, EditorState, RichUtils } from 'draft-js';
 import React, { memo, ReactPropTypes, useCallback, useMemo } from 'react';
@@ -18,6 +18,8 @@ import Italic from './modules/Italic';
 import Redo from './modules/Redo';
 import Unstyled from './modules/Unstyled';
 import Heading from './modules/Heading';
+import OList from './modules/OList';
+import UList from './modules/UList';
 
 interface Props {
   editorState: EditorState;
@@ -61,7 +63,7 @@ const HeadControls = memo((props: Props) => {
   //       );
   //     });
   const { editorState, onChange } = props;
-  const [bold, italic, undo, redo, unstyled, heading] = props.toolbar;
+  const [bold, italic, undo, redo, unstyled, heading, ol, ul] = props.toolbar;
 
   const handleToolChange = (newEditorState: EditorState) => {
     onChange(newEditorState);
@@ -117,6 +119,20 @@ const HeadControls = memo((props: Props) => {
       );
     }
   };
+  const renderOl = () => {
+    if (ol) {
+      return (
+        <OList editorState={editorState} onChange={handleToolChange}></OList>
+      );
+    }
+  };
+  const renderUl = () => {
+    if (ul) {
+      return (
+        <UList editorState={editorState} onChange={handleToolChange}></UList>
+      );
+    }
+  };
 
   const renderComponent = [
     renderUndo,
@@ -125,6 +141,8 @@ const HeadControls = memo((props: Props) => {
     renderBold,
     renderItalic,
     renderHeading,
+    renderOl,
+    renderUl,
   ];
 
   return (
