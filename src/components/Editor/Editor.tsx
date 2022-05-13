@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-10 11:25:41
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-12 00:07:48
+ * @LastEditTime: 2022-05-13 22:36:20
  */
 
 import {
@@ -17,15 +17,17 @@ import {
   BaseSyntheticEvent,
   KeyboardEvent,
   ReactPropTypes,
+  useCallback,
   useRef,
   useState,
 } from 'react';
 import 'draft-js/dist/Draft.css';
 import ToolBar from '../ToolBar/ToolBar';
 import Header from '../Header/Header';
+import { ToolbarParam } from '../ToolBar/@types';
 
 interface Props {
-  toolbar?: string[];
+  toolbar?: ToolbarParam[];
 }
 const customStyleMap: Record<string, any> = {};
 
@@ -64,23 +66,26 @@ const Editor = (props: Props) => {
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-  const editorChange = (editorState: EditorState) => {
-    setEditorState(editorState);
-  };
-  const handleControlClick = (key: string, type: string) => {
-    switch (type) {
-      case 'inline':
-        return setEditorState(
-          RichUtils.toggleInlineStyle(editorState, DraftInlineStyleTypeMap[key])
-        );
-      case 'block':
-        return setEditorState(
-          RichUtils.toggleBlockType(editorState, DraftBlockStyleTypeMap[key])
-        );
-      case 'command':
-        return setEditorState(EditorState[DraftCommandMap[key]](editorState));
-    }
-  };
+  const editorChange = useCallback(
+    (editorState: EditorState) => {
+      setEditorState(editorState);
+    },
+    [editorState]
+  );
+  // const handleControlClick = (key: string, type: string) => {
+  //   switch (type) {
+  //     case 'inline':
+  //       return setEditorState(
+  //         RichUtils.toggleInlineStyle(editorState, DraftInlineStyleTypeMap[key])
+  //       );
+  //     case 'block':
+  //       return setEditorState(
+  //         RichUtils.toggleBlockType(editorState, DraftBlockStyleTypeMap[key])
+  //       );
+  //     case 'command':
+  //       return setEditorState(EditorState[DraftCommandMap[key]](editorState));
+  //   }
+  // };
   const handleKeyCommand = (command: string) => {
     const newState = RichUtils.handleKeyCommand(editorState, command);
     if (newState) {
@@ -99,7 +104,11 @@ const Editor = (props: Props) => {
   return (
     <div>
       <Header defaultValue="[无标题]" onChange={handleHeaderChange}></Header>
-      <ToolBar toolbar={props.toolbar} onClick={handleControlClick}></ToolBar>
+      <ToolBar
+        toolbar={props.toolbar}
+        editorState={editorState}
+        onChange={editorChange}
+      ></ToolBar>
       <DraftEditor
         ref={editorRef}
         editorState={editorState}
