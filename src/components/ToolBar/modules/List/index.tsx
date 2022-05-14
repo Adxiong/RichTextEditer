@@ -2,40 +2,53 @@
  * @Description:
  * @version:
  * @Author: Adxiong
- * @Date: 2022-05-13 22:51:19
+ * @Date: 2022-05-14 09:29:36
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-14 10:17:39
+ * @LastEditTime: 2022-05-14 10:17:19
  */
+
 import { EditorState, RichUtils } from 'draft-js';
-import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import commonStyle from '../../common/commonToolbar.module.less';
+
 interface Props {
   editorState: EditorState;
   onChange: (newEditorState: EditorState) => void;
 }
 
-const Heading = (props: Props) => {
+interface SubmenuMapType {
+  title: string;
+  icon: string;
+  command: string;
+}
+
+const List = (props: Props) => {
+  const { onChange, editorState } = props;
   const [showSubmenu, setShowSubmenu] = useState<boolean>(false);
-  const { editorState, onChange } = props;
   const handleShowSubmenuClick = () => {
     setShowSubmenu(!showSubmenu);
   };
-  const commandMap = [
-    'header-one',
-    'header-two',
-    'header-three',
-    'header-four',
-    'header-five',
-    'header-six',
+  const submenuMap: SubmenuMapType[] = [
+    {
+      title: '有序列表',
+      icon: 'icon-youxuliebiao',
+      command: 'ordered-list-item',
+    },
+    {
+      title: '无序列表',
+      icon: 'icon-wuxuliebiao',
+      command: 'unordered-list-item',
+    },
   ];
-  const handleSubmenuClick = (index: number) => {
-    onChange(RichUtils.toggleBlockType(editorState, commandMap[index]));
+
+  const handleSubmenuClick = (command: string) => {
+    onChange(RichUtils.toggleBlockType(editorState, command));
   };
   return (
     <div className={commonStyle.toolbarItem}>
-      <i className="iconfont icon-02xieti"></i>
+      <i className="iconfont icon-liebiao"></i>
       <span onClick={handleShowSubmenuClick}>
-        标题
+        列表
         <i
           className={[
             'iconfont',
@@ -45,19 +58,14 @@ const Heading = (props: Props) => {
       </span>
       {showSubmenu && (
         <div className={commonStyle.submenu}>
-          {new Array(6).fill(1).map((item, index) => (
+          {submenuMap.map((item: SubmenuMapType, index: number) => (
             <div
               className={commonStyle.submenuItem}
-              onClick={() => handleSubmenuClick(index + 1)}
+              onClick={() => handleSubmenuClick(item.command)}
               key={index}
             >
-              <i
-                className={[
-                  'iconfont',
-                  `icon-1${3 + index}biaoti${index + 1}`,
-                ].join(' ')}
-              ></i>
-              <span>h{index + 1}</span>
+              <i className={['iconfont', `${item.icon}`].join(' ')}></i>
+              <span>{item.title}</span>
             </div>
           ))}
         </div>
@@ -66,4 +74,4 @@ const Heading = (props: Props) => {
   );
 };
 
-export default Heading;
+export default List;

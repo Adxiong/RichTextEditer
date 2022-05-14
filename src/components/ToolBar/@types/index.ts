@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-12 23:23:38
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-12 23:34:06
+ * @LastEditTime: 2022-05-14 09:48:40
  */
 export type ToolbarParam = 
   'undo'|
@@ -15,8 +15,7 @@ export type ToolbarParam =
   'strikethrough'|
   'unstyled'|
   'heading'|
-  'ol'|
-  'ul'|
+  'list'|
   'fontfamile'|
   'fontsize'|
   'fontcolor'|

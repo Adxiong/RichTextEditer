@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:00:09
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-12 23:37:34
+ * @LastEditTime: 2022-05-14 09:48:30
  */
 import './App.css';
 import Editor from './components/Editor/Editor';
@@ -27,9 +27,10 @@ function App() {
     // 'heading5', //标题5
     // 'heading6', //标题6
     'unstyled', //无样式
+    'list', //列表
     // 'paragraph', //段落
-    'ol', //有序列表项
-    'ul', //无序列表项
+    // 'ol', //有序列表项
+    // 'ul', //无序列表项
     'fontfamile',
     'fontsize',
     'fontcolor',
