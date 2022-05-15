@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-10 11:25:41
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-13 22:36:20
+ * @LastEditTime: 2022-05-15 12:35:49
  */
 
 import {
@@ -12,6 +12,8 @@ import {
   EditorState,
   DraftStyleMap,
   RichUtils,
+  ContentState,
+  ContentBlock,
 } from 'draft-js';
 import {
   BaseSyntheticEvent,
@@ -29,7 +31,51 @@ import { ToolbarParam } from '../ToolBar/@types';
 interface Props {
   toolbar?: ToolbarParam[];
 }
-const customStyleMap: Record<string, any> = {};
+
+const customStyleMap: Record<string, any> = {
+  'Microsoft YaHei': {
+    fontFamily: 'Microsoft YaHei',
+  },
+
+  'Times New Roman': {
+    fontFamily: 'Times New Roman',
+  },
+
+  SimSun: {
+    fontFamily: 'SimSun',
+  },
+
+  'PingFang SC': {
+    fontFamily: 'PingFang SC',
+  },
+
+  STKaiti: {
+    fontFamily: 'STKaiti',
+  },
+
+  Arial: {
+    fontFamily: 'Arial',
+  },
+
+  Calibri: {
+    fontFamily: 'Calibri',
+  },
+
+  'Comic Sans MS': {
+    fontFamily: 'Comic Sans MS',
+  },
+
+  Verdana: {
+    fontFamily: 'Verdana',
+  },
+
+  // justifyContentLeft: {
+  //   textAlign: 'left',
+  // },
+  // justifyContentRight: {
+  //   textAlign: 'right',
+  // },
+};
 
 const DraftCommandMap: Record<string, string> = {
   undo: 'undo',
@@ -60,18 +106,45 @@ const DraftBlockStyleTypeMap: Record<string, string> = {
   code: 'code-block', //代码块
   atomic: 'atomic', //原子
 };
+export const CustomDefineBlockStyleFn = (contentBlock: ContentBlock) => {
+  const type = contentBlock.getType();
+  console.log('type====>', type);
 
+  switch (type) {
+    case 'justifyContentLeft':
+      return 'custorleft';
+    case 'justifyContentRight':
+      console.log({
+        ...contentBlock.getData(),
+        'text-align': 'right',
+      });
+
+      return {
+        ...contentBlock.getData(),
+        textAlign: 'right',
+      };
+    case 'justifyContentSpaceAround':
+      return {
+        ...contentBlock.getData(),
+        textAlign: 'justify',
+      };
+    case 'justifyContentCenter':
+      return {
+        ...contentBlock.getData(),
+        textAlign: 'center',
+      };
+  }
+};
 const Editor = (props: Props) => {
   const editorRef = useRef<DraftEditor>(null);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-  const editorChange = useCallback(
-    (editorState: EditorState) => {
-      setEditorState(editorState);
-    },
-    [editorState]
-  );
+
+  const editorChange = (editorState: EditorState) => {
+    setEditorState(editorState);
+  };
+
   // const handleControlClick = (key: string, type: string) => {
   //   switch (type) {
   //     case 'inline':
@@ -114,7 +187,8 @@ const Editor = (props: Props) => {
         editorState={editorState}
         placeholder={'请输入内容......'}
         handleKeyCommand={handleKeyCommand}
-        // customStyleMap={customStyleMap}
+        customStyleMap={customStyleMap}
+        blockRendererFn={CustomDefineBlockStyleFn}
         onChange={editorChange}
         onTab={handleTab}
       ></DraftEditor>

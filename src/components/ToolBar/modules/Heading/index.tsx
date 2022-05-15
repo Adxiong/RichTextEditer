@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-13 22:51:19
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-14 10:17:39
+ * @LastEditTime: 2022-05-15 11:45:26
  */
 import { EditorState, RichUtils } from 'draft-js';
 import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
@@ -17,7 +17,8 @@ interface Props {
 const Heading = (props: Props) => {
   const [showSubmenu, setShowSubmenu] = useState<boolean>(false);
   const { editorState, onChange } = props;
-  const handleShowSubmenuClick = () => {
+  const handleShowSubmenuClick = (e: BaseSyntheticEvent) => {
+    e.preventDefault();
     setShowSubmenu(!showSubmenu);
   };
   const commandMap = [
@@ -28,13 +29,14 @@ const Heading = (props: Props) => {
     'header-five',
     'header-six',
   ];
-  const handleSubmenuClick = (index: number) => {
+  const handleSubmenuClick = (e: BaseSyntheticEvent, index: number) => {
+    e.preventDefault();
     onChange(RichUtils.toggleBlockType(editorState, commandMap[index]));
   };
   return (
     <div className={commonStyle.toolbarItem}>
       <i className="iconfont icon-02xieti"></i>
-      <span onClick={handleShowSubmenuClick}>
+      <span onMouseDown={handleShowSubmenuClick}>
         标题
         <i
           className={[
@@ -48,7 +50,7 @@ const Heading = (props: Props) => {
           {new Array(6).fill(1).map((item, index) => (
             <div
               className={commonStyle.submenuItem}
-              onClick={() => handleSubmenuClick(index + 1)}
+              onMouseDown={(e) => handleSubmenuClick(e, index + 1)}
               key={index}
             >
               <i
