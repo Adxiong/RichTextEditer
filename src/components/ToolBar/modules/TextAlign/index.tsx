@@ -4,24 +4,14 @@
  * @Author: Adxiong
  * @Date: 2022-05-14 21:59:43
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-16 21:32:56
+ * @LastEditTime: 2022-05-16 23:18:16
  */
-import { Button, Dropdown, Menu, MenuProps, Space } from 'antd';
+import { Button, Dropdown, Menu, Space } from 'antd';
 import { EditorState, Modifier } from 'draft-js';
 import { MenuInfo } from 'rc-menu/lib/interface';
-import {
-  BaseSyntheticEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
-import { ToolbarParam } from '../../@types';
+import { useCallback, useMemo, useState } from 'react';
 import commonStyle from '../../common/commonToolbar.module.less';
-import {
-  getSelectionCustomInlineStyle,
-  getSelectedBlocksMetadata,
-} from 'draftjs-utils';
+import { getSelectedBlocksMetadata } from 'draftjs-utils';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
 interface Props {
   editorState: EditorState;

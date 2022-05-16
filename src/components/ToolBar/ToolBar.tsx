@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:46:29
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-16 14:10:57
+ * @LastEditTime: 2022-05-16 23:21:27
  */
 import { DraftStyleMap, EditorState, RichUtils } from 'draft-js';
 import React, {
@@ -38,40 +38,6 @@ interface Props {
 }
 
 const HeadControls = memo((props: Props) => {
-  // const toolbar = props.toolbar
-  //   ? props.toolbar.map((key: string) => {
-  //       if (actions[key])
-  //         return (
-  //           <span
-  //             className={['iconfont', style.utilsItem, actions[key].icon].join(
-  //               ' '
-  //             )}
-  //             title={actions[key].title}
-  //             key={key}
-  //             onClick={() => {
-  //               props.onClick(key, actions[key].type);
-  //             }}
-  //           >
-  //             |
-  //           </span>
-  //         );
-  //     })
-  //   : Object.keys(actions).map((key: string) => {
-  //       return (
-  //         <span
-  //           className={['iconfont', style.utilsItem, actions[key].icon].join(
-  //             ' '
-  //           )}
-  //           title={actions[key].title}
-  //           key={key}
-  //           onClick={() => {
-  //             props.onClick(key, actions[key].type);
-  //           }}
-  //         >
-  //           |
-  //         </span>
-  //       );
-  //     });
   const { editorState, onChange } = props;
   const [clickKey, setClickKey] = useState<ToolbarParam>();
   const [
@@ -99,12 +65,7 @@ const HeadControls = memo((props: Props) => {
   const renderUndo = () => {
     return (
       undo && (
-        <Undo
-          editorState={editorState}
-          // key={clickKey}
-          onChange={handleToolChange}
-          // onClick={handleToolClick}
-        ></Undo>
+        <Undo editorState={editorState} onChange={handleToolChange}></Undo>
       )
     );
   };
@@ -112,12 +73,7 @@ const HeadControls = memo((props: Props) => {
   const renderRedo = () => {
     return (
       redo && (
-        <Redo
-          editorState={editorState}
-          // key={clickKey}
-          onChange={handleToolChange}
-          // onClick={handleToolClick}
-        ></Redo>
+        <Redo editorState={editorState} onChange={handleToolChange}></Redo>
       )
     );
   };
@@ -126,9 +82,7 @@ const HeadControls = memo((props: Props) => {
       unstyled && (
         <Unstyled
           editorState={editorState}
-          // key={clickKey}
           onChange={handleToolChange}
-          // onClick={handleToolClick}
         ></Unstyled>
       )
     );
@@ -136,12 +90,7 @@ const HeadControls = memo((props: Props) => {
   const renderBold = () => {
     return (
       bold && (
-        <Bold
-          editorState={editorState}
-          // key={clickKey}
-          onChange={handleToolChange}
-          // onClick={handleToolClick}
-        ></Bold>
+        <Bold editorState={editorState} onChange={handleToolChange}></Bold>
       )
     );
   };
@@ -149,12 +98,7 @@ const HeadControls = memo((props: Props) => {
   const renderItalic = () => {
     return (
       italic && (
-        <Italic
-          editorState={editorState}
-          // key={clickKey}
-          onChange={handleToolChange}
-          // onClick={handleToolClick}
-        ></Italic>
+        <Italic editorState={editorState} onChange={handleToolChange}></Italic>
       )
     );
   };
@@ -183,9 +127,7 @@ const HeadControls = memo((props: Props) => {
       heading && (
         <Heading
           editorState={editorState}
-          // key={clickKey}
           onChange={handleToolChange}
-          // onClick={handleToolClick}
         ></Heading>
       )
     );
@@ -193,12 +135,7 @@ const HeadControls = memo((props: Props) => {
   const renderList = () => {
     return (
       list && (
-        <List
-          editorState={editorState}
-          // key={clickKey}
-          onChange={handleToolChange}
-          // onClick={handleToolClick}
-        ></List>
+        <List editorState={editorState} onChange={handleToolChange}></List>
       )
     );
   };
@@ -206,12 +143,7 @@ const HeadControls = memo((props: Props) => {
   const renderFontFamily = () => {
     return (
       fontfamily && (
-        <FontFamily
-          editorState={editorState}
-          // key={clickKey}
-          onChange={handleToolChange}
-          // onClick={handleToolClick}
-        />
+        <FontFamily editorState={editorState} onChange={handleToolChange} />
       )
     );
   };
@@ -219,12 +151,7 @@ const HeadControls = memo((props: Props) => {
   const renderFontSize = () => {
     return (
       fontsize && (
-        <FontSize
-          editorState={editorState}
-          // key={clickKey}
-          onChange={handleToolChange}
-          // onClick={handleToolClick}
-        />
+        <FontSize editorState={editorState} onChange={handleToolChange} />
       )
     );
   };
@@ -232,12 +159,7 @@ const HeadControls = memo((props: Props) => {
   const renderTextAlign = () => {
     return (
       textalign && (
-        <TextAlign
-          editorState={editorState}
-          // key={clickKey}
-          onChange={handleToolChange}
-          // onClick={handleToolClick}
-        />
+        <TextAlign editorState={editorState} onChange={handleToolChange} />
       )
     );
   };
