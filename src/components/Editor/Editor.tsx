@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-10 11:25:41
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-15 12:35:49
+ * @LastEditTime: 2022-05-16 17:18:04
  */
 
 import {
@@ -27,119 +27,83 @@ import 'draft-js/dist/Draft.css';
 import ToolBar from '../ToolBar/ToolBar';
 import Header from '../Header/Header';
 import { ToolbarParam } from '../ToolBar/@types';
-
+import './styles/index.css';
+import { getCustomStyleMap } from 'draftjs-utils';
 interface Props {
   toolbar?: ToolbarParam[];
 }
 
-const customStyleMap: Record<string, any> = {
-  'Microsoft YaHei': {
-    fontFamily: 'Microsoft YaHei',
-  },
+// const customStyleMap: Record<string, any> = {
+//   'Microsoft YaHei': {
+//     fontFamily: 'Microsoft YaHei',
+//   },
 
-  'Times New Roman': {
-    fontFamily: 'Times New Roman',
-  },
+//   'Times New Roman': {
+//     fontFamily: 'Times New Roman',
+//   },
 
-  SimSun: {
-    fontFamily: 'SimSun',
-  },
+//   SimSun: {
+//     fontFamily: 'SimSun',
+//   },
 
-  'PingFang SC': {
-    fontFamily: 'PingFang SC',
-  },
+//   'PingFang SC': {
+//     fontFamily: 'PingFang SC',
+//   },
 
-  STKaiti: {
-    fontFamily: 'STKaiti',
-  },
+//   STKaiti: {
+//     fontFamily: 'STKaiti',
+//   },
 
-  Arial: {
-    fontFamily: 'Arial',
-  },
+//   Arial: {
+//     fontFamily: 'Arial',
+//   },
 
-  Calibri: {
-    fontFamily: 'Calibri',
-  },
+//   Calibri: {
+//     fontFamily: 'Calibri',
+//   },
 
-  'Comic Sans MS': {
-    fontFamily: 'Comic Sans MS',
-  },
+//   'Comic Sans MS': {
+//     fontFamily: 'Comic Sans MS',
+//   },
 
-  Verdana: {
-    fontFamily: 'Verdana',
-  },
-
-  // justifyContentLeft: {
-  //   textAlign: 'left',
-  // },
-  // justifyContentRight: {
-  //   textAlign: 'right',
-  // },
-};
-
-const DraftCommandMap: Record<string, string> = {
-  undo: 'undo',
-  redo: 'redo',
-};
-
-const DraftInlineStyleTypeMap: Record<string, string> = {
-  bold: 'BOLD',
-  italic: 'ITALIC',
-  strikethrough: 'STRIKETHROUGH',
-  underline: 'UNDERLINE',
-  code: 'CODE',
-};
-
-const DraftBlockStyleTypeMap: Record<string, string> = {
-  //块级
-  heading1: 'header-one',
-  heading2: 'header-two',
-  heading3: 'header-three',
-  heading4: 'header-four',
-  heading5: 'header-five',
-  heading6: 'header-sex',
-  unstyled: 'unstyled', //无样式
-  paragraph: 'paragraph', //段落
-  ul: 'unordered-list-item', //无序列表项
-  ol: 'ordered-list-item', //有序列表项
-  blockquote: 'blockquote', //块引用
-  code: 'code-block', //代码块
-  atomic: 'atomic', //原子
-};
-export const CustomDefineBlockStyleFn = (contentBlock: ContentBlock) => {
-  const type = contentBlock.getType();
-  console.log('type====>', type);
-
-  switch (type) {
-    case 'justifyContentLeft':
-      return 'custorleft';
-    case 'justifyContentRight':
-      console.log({
-        ...contentBlock.getData(),
-        'text-align': 'right',
-      });
-
-      return {
-        ...contentBlock.getData(),
-        textAlign: 'right',
-      };
-    case 'justifyContentSpaceAround':
-      return {
-        ...contentBlock.getData(),
-        textAlign: 'justify',
-      };
-    case 'justifyContentCenter':
-      return {
-        ...contentBlock.getData(),
-        textAlign: 'center',
-      };
-  }
-};
+//   Verdana: {
+//     fontFamily: 'Verdana',
+//   },
+//   'fontSize8': {
+//     fontSize: 8
+//   },
+// 'fontSize9': {
+//   fontSize: 9
+// },
+// 'fontSize10': {
+//   fontSize: 10
+// },
+// 'fontSize11': {
+//   fontSize: 11
+// },
+// 'fontSize12': {
+//   fontSize: 12
+// },
+// 'fontSize14': {
+//   fontSize: 14
+// },
+// 'fontSize16'
+// 'fontSize18'
+// 'fontSize20'
+// 'fontSize24'
+// 'fontSize30'
+// 'fontSize36'
+// 'fontSize48'
+// 'fontSize60'
+// 'fontSize72'
+// 'fontSize96'
+// };
 const Editor = (props: Props) => {
   const editorRef = useRef<DraftEditor>(null);
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
+  const [dymanicCssList, setDymanicCssList] = useState<string[]>([]);
 
   const editorChange = (editorState: EditorState) => {
     setEditorState(editorState);
@@ -174,6 +138,21 @@ const Editor = (props: Props) => {
   const handleTab = (event: KeyboardEvent) => {
     setEditorState(RichUtils.onTab(event, editorState, 2));
   };
+
+  const customBlockStyleMap = (contentBlock: ContentBlock) => {
+    const metaData = contentBlock.toJS().data;
+
+    const textIndent = metaData['text-indent'];
+    const lineHeight = metaData['line-height'];
+    const letterSpacing = metaData['letter-spacing'];
+    const textAlign = metaData['text-align'];
+    let className: string[] = [];
+    textAlign && className.push(textAlign);
+    textIndent && className.push(textIndent);
+    lineHeight && className.push(lineHeight);
+    return className.join(' ');
+  };
+
   return (
     <div>
       <Header defaultValue="[无标题]" onChange={handleHeaderChange}></Header>
@@ -187,8 +166,9 @@ const Editor = (props: Props) => {
         editorState={editorState}
         placeholder={'请输入内容......'}
         handleKeyCommand={handleKeyCommand}
-        customStyleMap={customStyleMap}
-        blockRendererFn={CustomDefineBlockStyleFn}
+        customStyleMap={getCustomStyleMap()}
+        blockStyleFn={customBlockStyleMap}
+        // blockRendererFn={CustomDefineBlockStyleFn}
         onChange={editorChange}
         onTab={handleTab}
       ></DraftEditor>

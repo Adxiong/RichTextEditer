@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:46:29
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-14 23:42:43
+ * @LastEditTime: 2022-05-16 14:10:57
  */
 import { DraftStyleMap, EditorState, RichUtils } from 'draft-js';
 import React, {
@@ -27,6 +27,9 @@ import Heading from './modules/Heading';
 import List from './modules/List';
 import FontFamily from './modules/FontFamily';
 import TextAlign from './modules/TextAlign';
+import FontSize from './modules/FontSize';
+import Strikethrough from './modules/Strikethrough';
+import Underline from './modules/Underline';
 
 interface Props {
   editorState: EditorState;
@@ -77,9 +80,12 @@ const HeadControls = memo((props: Props) => {
     undo,
     redo,
     unstyled,
+    underline,
+    strikethrough,
     heading,
     list,
     fontfamily,
+    fontsize,
     textalign,
   ] = props.toolbar;
 
@@ -152,6 +158,26 @@ const HeadControls = memo((props: Props) => {
       )
     );
   };
+  const renderUnderline = () => {
+    return (
+      underline && (
+        <Underline
+          editorState={editorState}
+          onChange={handleToolChange}
+        ></Underline>
+      )
+    );
+  };
+  const renderStrikethrough = () => {
+    return (
+      strikethrough && (
+        <Strikethrough
+          editorState={editorState}
+          onChange={handleToolChange}
+        ></Strikethrough>
+      )
+    );
+  };
   const renderHeading = () => {
     return (
       heading && (
@@ -190,6 +216,19 @@ const HeadControls = memo((props: Props) => {
     );
   };
 
+  const renderFontSize = () => {
+    return (
+      fontsize && (
+        <FontSize
+          editorState={editorState}
+          // key={clickKey}
+          onChange={handleToolChange}
+          // onClick={handleToolClick}
+        />
+      )
+    );
+  };
+
   const renderTextAlign = () => {
     return (
       textalign && (
@@ -209,9 +248,12 @@ const HeadControls = memo((props: Props) => {
     renderUnstyled,
     renderBold,
     renderItalic,
+    renderUnderline,
+    renderStrikethrough,
     renderHeading,
     renderList,
     renderFontFamily,
+    renderFontSize,
     renderTextAlign,
   ];
 

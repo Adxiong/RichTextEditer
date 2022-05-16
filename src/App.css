@@ -2,6 +2,7 @@
 @import '../node_modules/antd/dist/antd.css';
 @import 'https://at.alicdn.com/t/font_3391600_muwjzj6sims.css?spm=a313x.7781069.1998910419.152&file=font_3391600_muwjzj6sims.css';
 .App {
+  font-family: kaiti;
 }
 
 .App .DraftEditor-root {
@@ -13,4 +14,7 @@
   overflow-x: hidden;
   overflow-y: auto;
   border: 1px solid #000;
+}
+.public-DraftEditor-content .public-DraftStyleDefault-ltr{
+  text-align: inherit;
 }
