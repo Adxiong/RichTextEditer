@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:46:29
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-16 23:21:27
+ * @LastEditTime: 2022-05-17 18:16:36
  */
 import { DraftStyleMap, EditorState, RichUtils } from 'draft-js';
 import React, {
@@ -30,6 +30,8 @@ import TextAlign from './modules/TextAlign';
 import FontSize from './modules/FontSize';
 import Strikethrough from './modules/Strikethrough';
 import Underline from './modules/Underline';
+import FontColor from './modules/FontColor';
+import BackgroundColor from './modules/BackgroundColor';
 
 interface Props {
   editorState: EditorState;
@@ -53,15 +55,14 @@ const HeadControls = memo((props: Props) => {
     fontfamily,
     fontsize,
     textalign,
+    fontcolor,
+    backgroundcolor,
   ] = props.toolbar;
 
   const handleToolChange = (newEditorState: EditorState) => {
     onChange(newEditorState);
   };
 
-  const handleToolClick = (key: ToolbarParam) => {
-    setClickKey(key);
-  };
   const renderUndo = () => {
     return (
       undo && (
@@ -164,6 +165,27 @@ const HeadControls = memo((props: Props) => {
     );
   };
 
+  const renderFontColor = () => {
+    return (
+      fontcolor && (
+        <FontColor
+          editorState={editorState}
+          onChange={handleToolChange}
+        ></FontColor>
+      )
+    );
+  };
+
+  const renderBackgroundColor = () => {
+    return (
+      backgroundcolor && (
+        <BackgroundColor
+          editorState={editorState}
+          onChange={handleToolChange}
+        ></BackgroundColor>
+      )
+    );
+  };
   const renderComponent = [
     renderUndo,
     renderRedo,
@@ -177,6 +199,8 @@ const HeadControls = memo((props: Props) => {
     renderFontFamily,
     renderFontSize,
     renderTextAlign,
+    renderFontColor,
+    renderBackgroundColor,
   ];
 
   return (

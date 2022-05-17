@@ -1,12 +1,17 @@
-#pickerColor{
+.pickerColor{
+  width: 350px;
+  height: 180px;
+  padding: 10px;
+  box-sizing: border-box;
+  background-color: #ffffff;
+  box-shadow: 0 3px 6px -4px rgb(0 0 0 / 12%), 0 6px 16px 0 rgb(0 0 0 / 8%), 0 9px 28px 8px rgb(0 0 0 / 5%);
+  border-radius: 4px ;
   display: grid;
-  grid-template-rows: repeat(5, 30px );
-  grid-template-columns: repeat(9, 30px);
-
+  grid-template-columns: repeat(auto-fill, minmax(30px,1fr));
+  grid-template-rows: repeat(auto-fill, minmax(30px,1fr));
   gap: 2px;
 }
 
-.colorBlock {
-  width: 30px;
-  height: 30px;
+.colorBlock:hover{
+  border: 2px solid skyblue;
 }

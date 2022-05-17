@@ -4,11 +4,11 @@
  * @Author: Adxiong
  * @Date: 2022-05-11 12:12:00
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-11 12:23:17
+ * @LastEditTime: 2022-05-17 20:03:04
  */
+import { Col, Row } from 'antd';
 import style from './styles/index.module.less';
 const color = [
-  undefined,
   '0D0016',
   'FE2C24',
   'FF9900',
@@ -53,15 +53,24 @@ const color = [
   '1A439C',
   '511B78',
 ];
-const PickerColor = () => {
+
+interface Props {
+  onClick: (color: string) => void;
+}
+const PickerColor = (props: Props) => {
+  const handleClick = (color: string) => {
+    props.onClick(color);
+  };
   return (
-    <div id={style.pickerColor}>
+    <div className={style.pickerColor}>
       {color.map((item) => (
         <a
-          key={item || 'undefined'}
           className={style.colorBlock}
-          style={{ backgroundColor: `#${item}` }}
-          data-value={item}
+          key={item}
+          onClick={() => handleClick(item)}
+          style={{
+            backgroundColor: `#${item}`,
+          }}
         ></a>
       ))}
     </div>

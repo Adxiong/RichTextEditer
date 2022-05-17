@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-14 21:59:43
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-16 23:18:16
+ * @LastEditTime: 2022-05-17 11:35:52
  */
 import { Button, Dropdown, Menu, Space } from 'antd';
 import { EditorState, Modifier } from 'draft-js';
@@ -13,30 +13,17 @@ import { useCallback, useMemo, useState } from 'react';
 import commonStyle from '../../common/commonToolbar.module.less';
 import { getSelectedBlocksMetadata } from 'draftjs-utils';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { setTextAlign } from './utils';
 interface Props {
   editorState: EditorState;
   onChange: (newEditorState: EditorState) => void;
 }
-interface AlignType {
-  label: string;
-  value: string;
-  icon: string;
-}
+
 const TextAlign = (props: Props) => {
   const { editorState, onChange } = props;
   const [visible, setVisible] = useState<boolean>(false);
   const handleClick = (info: MenuInfo) => {
-    const newContentState = Modifier.setBlockData(
-      editorState.getCurrentContent(),
-      editorState.getSelection(),
-      { 'text-align': info.key }
-    );
-    const newState = EditorState.push(
-      editorState,
-      newContentState,
-      'change-block-data'
-    );
-
+    const newState = setTextAlign(editorState, info.key);
     onChange(newState);
   };
 
