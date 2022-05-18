@@ -4,14 +4,13 @@
  * @Author: Adxiong
  * @Date: 2022-05-17 11:52:38
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-17 20:21:23
+ * @LastEditTime: 2022-05-18 17:22:31
  */
 import { ContentBlock } from "draft-js";
 
 const customBlockStyleMap = (contentBlock: ContentBlock) => {
   const metaData = contentBlock.toJS().data;
-  console.log(metaData);
-  
+    
   const textIndent = metaData['text-indent'];
   const backgroundColor = metaData['background-color']
   const lineHeight = metaData['line-height'];
@@ -23,7 +22,7 @@ const customBlockStyleMap = (contentBlock: ContentBlock) => {
   lineHeight && className.push(lineHeight);
   backgroundColor && className.push(backgroundColor)
 
-  console.log(className);
+  // console.log(className);
   
   
   return className.join(' ');

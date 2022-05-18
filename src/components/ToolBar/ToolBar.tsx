@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:46:29
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-17 18:16:36
+ * @LastEditTime: 2022-05-18 16:52:51
  */
 import { DraftStyleMap, EditorState, RichUtils } from 'draft-js';
 import React, {
@@ -57,7 +57,7 @@ const HeadControls = memo((props: Props) => {
     textalign,
     fontcolor,
     backgroundcolor,
-  ] = props.toolbar;
+  ] = props.toolbar!;
 
   const handleToolChange = (newEditorState: EditorState) => {
     onChange(newEditorState);
