@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-10 11:25:41
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-18 23:22:40
+ * @LastEditTime: 2022-05-19 22:44:29
  */
 
 import {
@@ -24,6 +24,7 @@ import handleKeyCommand from './handleKeyCommand';
 import handleKeyBindingFn from './handleKeyBindingFn';
 import customBlockStyleMap from './customBlockStyleMap';
 import decorator from './decoratar';
+import Media from './Entity/Media';
 interface Props {
   toolbar?: ToolbarParam[];
 }
@@ -45,6 +46,17 @@ const Editor = (props: Props) => {
     setEditorState(RichUtils.onTab(event, editorState, 2));
   };
 
+  const mediaBlockRenderer = (block: ContentBlock) => {
+    if (block.getType() === 'atomic') {
+      return {
+        component: Media,
+        editable: false,
+      };
+    }
+
+    return null;
+  };
+
   return (
     <div>
       <Header defaultValue="[无标题]" onChange={handleHeaderChange}></Header>
@@ -63,7 +75,7 @@ const Editor = (props: Props) => {
         keyBindingFn={(e) => handleKeyBindingFn(e)}
         customStyleMap={getCustomStyleMap()}
         blockStyleFn={customBlockStyleMap}
-        // blockRendererFn={CustomDefineBlockStyleFn}
+        blockRendererFn={mediaBlockRenderer}
         onChange={editorChange}
         onTab={handleTab}
       ></DraftEditor>

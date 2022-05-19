@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-18 23:21:25
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-19 13:00:52
+ * @LastEditTime: 2022-05-19 23:06:07
  */
 
 import { Popover, Space } from 'antd';
@@ -16,7 +16,9 @@ import {
   ReactPortal,
   useState,
 } from 'react';
+import Image from './Entity/Media/Image';
 import Link from './Entity/Link';
+import Video from './Entity/Media/Video';
 
 // decorator，用于超链接
 const decorator = new CompositeDecorator([

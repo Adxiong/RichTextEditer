@@ -1,3 +1,11 @@
+/*
+ * @Description:
+ * @version:
+ * @Author: Adxiong
+ * @Date: 2022-05-19 22:34:52
+ * @LastEditors: Adxiong
+ * @LastEditTime: 2022-05-19 22:57:20
+ */
 import { Button, Dropdown, Form, Input, Popover } from 'antd';
 import { FormInstance, useForm } from 'antd/lib/form/Form';
 import { AtomicBlockUtils, EditorState, Modifier, RichUtils } from 'draft-js';
@@ -8,7 +16,7 @@ interface Props {
   onChange: (newEditorState: EditorState) => void;
 }
 
-const Image = (props: Props) => {
+const Audio = (props: Props) => {
   const [form] = Form.useForm();
   const { editorState, onChange } = props;
 
@@ -17,7 +25,7 @@ const Image = (props: Props) => {
     form.validateFields().then((form) => {
       const contentState = editorState.getCurrentContent();
       const contentStateWithEntity = contentState.createEntity(
-        'image',
+        'audio',
         'IMMUTABLE',
         { src: form.addr }
       );
@@ -26,15 +34,19 @@ const Image = (props: Props) => {
         currentContent: contentStateWithEntity,
       });
 
-      onChange(
-        AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ')
+      const newNewEditorState = AtomicBlockUtils.insertAtomicBlock(
+        newEditorState,
+        entityKey,
+        ' '
       );
+      onChange(newNewEditorState);
+      //
     });
   };
-  const renderForm = () => {
+  const renderForm = useCallback(() => {
     return (
       <Form form={form}>
-        <Form.Item label="图片地址" name="addr">
+        <Form.Item label="音频地址" name="addr">
           <Input></Input>
         </Form.Item>
         <Form.Item>
@@ -42,13 +54,13 @@ const Image = (props: Props) => {
         </Form.Item>
       </Form>
     );
-  };
+  }, []);
 
   return (
-    <Popover content={renderForm()}>
-      <Button>插入图片</Button>
+    <Popover content={renderForm()} trigger="click">
+      <Button>插入音频</Button>
     </Popover>
   );
 };
 
-export default Image;
+export default Audio;

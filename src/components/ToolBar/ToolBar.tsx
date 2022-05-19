@@ -4,16 +4,10 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:46:29
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-18 17:52:28
+ * @LastEditTime: 2022-05-19 23:10:19
  */
 import { DraftStyleMap, EditorState, RichUtils } from 'draft-js';
-import React, {
-  memo,
-  ReactPropTypes,
-  useCallback,
-  useMemo,
-  useState,
-} from 'react';
+import React, { ReactPropTypes, useCallback, useState } from 'react';
 import PickerColor from './modules/PickerColor/PickerColor';
 import style from './styles/index.module.less';
 import actions from './actions';
@@ -42,7 +36,7 @@ interface Props {
   toolbar?: ToolbarParam[];
 }
 
-const HeadControls = memo((props: Props) => {
+const HeadControls = (props: Props) => {
   const { editorState, onChange } = props;
   const [clickKey, setClickKey] = useState<ToolbarParam>();
   const [
@@ -203,7 +197,7 @@ const HeadControls = memo((props: Props) => {
   };
   const renderImage = () => {
     return (
-      link && (
+      image && (
         <Image editorState={editorState} onChange={handleToolChange}></Image>
       )
     );
@@ -243,6 +237,6 @@ const HeadControls = memo((props: Props) => {
       ))}
     </div>
   );
-});
+};
 
 export default HeadControls;
