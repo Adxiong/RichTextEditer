@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:46:29
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-18 16:52:51
+ * @LastEditTime: 2022-05-18 17:52:28
  */
 import { DraftStyleMap, EditorState, RichUtils } from 'draft-js';
 import React, {
@@ -32,6 +32,9 @@ import Strikethrough from './modules/Strikethrough';
 import Underline from './modules/Underline';
 import FontColor from './modules/FontColor';
 import BackgroundColor from './modules/BackgroundColor';
+import Link from './modules/Link';
+import Video from './modules/Video';
+import Image from './modules/Image';
 
 interface Props {
   editorState: EditorState;
@@ -57,6 +60,9 @@ const HeadControls = memo((props: Props) => {
     textalign,
     fontcolor,
     backgroundcolor,
+    link,
+    image,
+    video,
   ] = props.toolbar!;
 
   const handleToolChange = (newEditorState: EditorState) => {
@@ -123,6 +129,7 @@ const HeadControls = memo((props: Props) => {
       )
     );
   };
+
   const renderHeading = () => {
     return (
       heading && (
@@ -186,6 +193,29 @@ const HeadControls = memo((props: Props) => {
       )
     );
   };
+
+  const renderLink = () => {
+    return (
+      link && (
+        <Link editorState={editorState} onChange={handleToolChange}></Link>
+      )
+    );
+  };
+  const renderImage = () => {
+    return (
+      link && (
+        <Image editorState={editorState} onChange={handleToolChange}></Image>
+      )
+    );
+  };
+
+  const renderVideo = () => {
+    return (
+      video && (
+        <Video editorState={editorState} onChange={handleToolChange}></Video>
+      )
+    );
+  };
   const renderComponent = [
     renderUndo,
     renderRedo,
@@ -201,6 +231,9 @@ const HeadControls = memo((props: Props) => {
     renderTextAlign,
     renderFontColor,
     renderBackgroundColor,
+    renderLink,
+    renderImage,
+    renderVideo,
   ];
 
   return (

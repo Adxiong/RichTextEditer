@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-10 11:25:41
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-17 11:53:07
+ * @LastEditTime: 2022-05-18 23:22:40
  */
 
 import {
@@ -23,6 +23,7 @@ import { getCustomStyleMap } from 'draftjs-utils';
 import handleKeyCommand from './handleKeyCommand';
 import handleKeyBindingFn from './handleKeyBindingFn';
 import customBlockStyleMap from './customBlockStyleMap';
+import decorator from './decoratar';
 interface Props {
   toolbar?: ToolbarParam[];
 }
@@ -30,7 +31,7 @@ interface Props {
 const Editor = (props: Props) => {
   const editorRef = useRef<DraftEditor>(null);
   const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty()
+    EditorState.createEmpty(decorator)
   );
 
   const editorChange = (editorState: EditorState) => {
