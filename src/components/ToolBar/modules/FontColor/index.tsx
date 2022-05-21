@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-17 16:01:56
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-17 20:03:21
+ * @LastEditTime: 2022-05-21 17:00:23
  */
 import { Button, Dropdown, Space } from 'antd';
 import { EditorState } from 'draft-js';
@@ -61,6 +61,7 @@ const FontColor = (props: Props) => {
     >
       <Button>
         <Space>
+          字体颜色
           <div
             style={{
               width: 20,

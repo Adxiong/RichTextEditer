@@ -11,7 +11,7 @@ import setBackgroundColor from './setBackgroundColor';
  * @Author: Adxiong
  * @Date: 2022-05-17 18:14:03
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-17 20:17:48
+ * @LastEditTime: 2022-05-21 17:00:09
  */
 interface Props {
   editorState: EditorState;
@@ -52,6 +52,7 @@ const BackgroundColor = (props: Props) => {
     >
       <Button>
         <Space>
+          背景颜色
           <div
             style={{
               width: 20,

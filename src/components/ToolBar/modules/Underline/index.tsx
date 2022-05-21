@@ -4,8 +4,10 @@
  * @Author: Adxiong
  * @Date: 2022-05-16 14:09:34
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-16 17:31:27
+ * @LastEditTime: 2022-05-21 16:21:06
  */
+import { UnderlineOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { EditorState, RichUtils } from 'draft-js';
 import { BaseSyntheticEvent } from 'react';
 import commonStyle from '../../common/commonToolbar.module.less';
@@ -22,9 +24,8 @@ const Underline = (props: Props) => {
     onChange(RichUtils.toggleInlineStyle(editorState, 'UNDERLINE'));
   };
   return (
-    <div className={commonStyle.toolbarItem} onMouseDown={handleClick}>
-      <i className="iconfont icon-03xiahuaxian"></i>
-      <span>下划线</span>
+    <div onMouseDown={handleClick}>
+      <Button icon={<UnderlineOutlined />}>下划线</Button>
     </div>
   );
 };

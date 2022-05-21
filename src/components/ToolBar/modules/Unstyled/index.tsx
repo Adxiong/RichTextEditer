@@ -4,8 +4,10 @@
  * @Author: Adxiong
  * @Date: 2022-05-13 18:03:44
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-15 11:48:47
+ * @LastEditTime: 2022-05-21 16:19:31
  */
+import { ClearOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { EditorState, RichUtils } from 'draft-js';
 import { BaseSyntheticEvent } from 'react';
 import commonStyle from '../../common/commonToolbar.module.less';
@@ -20,9 +22,8 @@ const Unstyled = (props: Props) => {
     onChange(RichUtils.toggleBlockType(editorState, 'unstyled'));
   };
   return (
-    <div className={commonStyle.toolbarItem} onMouseDown={handleClick}>
-      <i className="iconfont icon-25chehui" />
-      <span>清除格式</span>
+    <div onMouseDown={handleClick}>
+      <Button icon={<ClearOutlined />}>清除格式</Button>
     </div>
   );
 };

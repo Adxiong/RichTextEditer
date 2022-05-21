@@ -4,7 +4,7 @@
  * @Author: Adxiong
  * @Date: 2022-05-10 11:25:41
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-19 22:44:29
+ * @LastEditTime: 2022-05-20 15:45:38
  */
 
 import {
@@ -27,23 +27,23 @@ import decorator from './decoratar';
 import Media from './Entity/Media';
 interface Props {
   toolbar?: ToolbarParam[];
+  editorState: EditorState;
+  onChange: (newEditorState: EditorState) => void;
 }
 
 const Editor = (props: Props) => {
   const editorRef = useRef<DraftEditor>(null);
-  const [editorState, setEditorState] = useState(() =>
-    EditorState.createEmpty(decorator)
-  );
+  const { editorState, onChange } = props;
 
   const editorChange = (editorState: EditorState) => {
-    setEditorState(editorState);
+    onChange(editorState);
   };
 
   const handleHeaderChange = (e: BaseSyntheticEvent) => {
     console.log(e.target.value);
   };
   const handleTab = (event: KeyboardEvent) => {
-    setEditorState(RichUtils.onTab(event, editorState, 2));
+    onChange(RichUtils.onTab(event, editorState, 2));
   };
 
   const mediaBlockRenderer = (block: ContentBlock) => {

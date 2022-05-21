@@ -4,10 +4,19 @@
  * @Author: Adxiong
  * @Date: 2022-05-13 22:51:19
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-15 11:45:26
+ * @LastEditTime: 2022-05-21 16:59:35
  */
+import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu, Space } from 'antd';
 import { EditorState, RichUtils } from 'draft-js';
-import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
+import { MenuInfo } from 'rc-menu/lib/interface';
+import {
+  BaseSyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import commonStyle from '../../common/commonToolbar.module.less';
 interface Props {
   editorState: EditorState;
@@ -15,55 +24,59 @@ interface Props {
 }
 
 const Heading = (props: Props) => {
-  const [showSubmenu, setShowSubmenu] = useState<boolean>(false);
   const { editorState, onChange } = props;
-  const handleShowSubmenuClick = (e: BaseSyntheticEvent) => {
-    e.preventDefault();
-    setShowSubmenu(!showSubmenu);
+  const [visible, setVisible] = useState<boolean>(false);
+
+  const handleClick = (info: MenuInfo) => {
+    onChange(RichUtils.toggleBlockType(editorState, info.key));
   };
-  const commandMap = [
-    'header-one',
-    'header-two',
-    'header-three',
-    'header-four',
-    'header-five',
-    'header-six',
+
+  const MenuItem = [
+    { label: '标题一', key: 'header-one' },
+    { label: '标题二', key: 'header-two' },
+    { label: '标题三', key: 'header-three' },
+    { label: '标题四', key: 'header-four' },
+    { label: '标题五', key: 'header-five' },
+    { label: '标题六', key: 'header-six' },
   ];
-  const handleSubmenuClick = (e: BaseSyntheticEvent, index: number) => {
-    e.preventDefault();
-    onChange(RichUtils.toggleBlockType(editorState, commandMap[index]));
+
+  const RenderMenu = () => {
+    return <Menu items={MenuItem} onClick={handleClick}></Menu>;
+  };
+  const renderArrow = useCallback(() => {
+    return visible ? <CaretUpOutlined /> : <CaretDownOutlined />;
+  }, [visible]);
+
+  const handleVisibleChange = (visible: boolean) => {
+    setVisible(visible);
+  };
+  const getCurrentHeading = () => {
+    // console.log(editorState.getCurrentContent().toJS());
+    const entityKey = editorState.getSelection().getAnchorKey();
+    const type = editorState
+      .getCurrentContent()
+      .getBlockForKey(entityKey)
+      .getType();
+
+    if (type) {
+      for (let i = 0; i < MenuItem.length; i++) {
+        if (MenuItem[i].key === type) {
+          return MenuItem[i].label;
+        }
+      }
+    }
+    return '标题';
   };
   return (
     <div className={commonStyle.toolbarItem}>
-      <i className="iconfont icon-02xieti"></i>
-      <span onMouseDown={handleShowSubmenuClick}>
-        标题
-        <i
-          className={[
-            'iconfont',
-            `${showSubmenu ? 'icon-arrow-up' : 'icon-arrow-down'}`,
-          ].join(' ')}
-        />
-      </span>
-      {showSubmenu && (
-        <div className={commonStyle.submenu}>
-          {new Array(6).fill(1).map((item, index) => (
-            <div
-              className={commonStyle.submenuItem}
-              onMouseDown={(e) => handleSubmenuClick(e, index + 1)}
-              key={index}
-            >
-              <i
-                className={[
-                  'iconfont',
-                  `icon-1${3 + index}biaoti${index + 1}`,
-                ].join(' ')}
-              ></i>
-              <span>h{index + 1}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      <Dropdown overlay={RenderMenu()} onVisibleChange={handleVisibleChange}>
+        <Button style={{ width: 100 }}>
+          <Space>
+            {getCurrentHeading()}
+            {renderArrow()}
+          </Space>
+        </Button>
+      </Dropdown>
     </div>
   );
 };

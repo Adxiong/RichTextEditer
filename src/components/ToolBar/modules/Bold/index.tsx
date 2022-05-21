@@ -4,8 +4,10 @@
  * @Author: Adxiong
  * @Date: 2022-05-12 23:39:39
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-15 11:41:59
+ * @LastEditTime: 2022-05-21 16:20:00
  */
+import { BoldOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { EditorState, RichUtils } from 'draft-js';
 import { BaseSyntheticEvent } from 'react';
 import { ToolbarParam } from '../../@types';
@@ -23,9 +25,8 @@ const Bold = (props: Props) => {
     onChange(RichUtils.toggleInlineStyle(editorState, 'BOLD'));
   };
   return (
-    <div className={commonStyle.toolbarItem} onMouseDown={handleClick}>
-      <i className="iconfont icon-01jiacu" />
-      <span>加粗</span>
+    <div onMouseDown={handleClick}>
+      <Button icon={<BoldOutlined />}>加粗</Button>
     </div>
   );
 };

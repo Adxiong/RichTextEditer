@@ -4,8 +4,10 @@
  * @Author: Adxiong
  * @Date: 2022-05-13 18:25:25
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-16 17:31:22
+ * @LastEditTime: 2022-05-21 16:21:52
  */
+import { StrikethroughOutlined } from '@ant-design/icons';
+import { Button } from 'antd';
 import { EditorState, RichUtils } from 'draft-js';
 import { BaseSyntheticEvent } from 'react';
 import commonStyle from '../../common/commonToolbar.module.less';
@@ -22,9 +24,8 @@ const Strikethrough = (props: Props) => {
     onChange(RichUtils.toggleInlineStyle(editorState, 'STRIKETHROUGH'));
   };
   return (
-    <div className={commonStyle.toolbarItem} onMouseDown={handleClick}>
-      <i className="iconfont icon-04shanchuxian"></i>
-      <span>删除线</span>
+    <div onMouseDown={handleClick}>
+      <Button icon={<StrikethroughOutlined />}>删除线</Button>
     </div>
   );
 };

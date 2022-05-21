@@ -4,11 +4,14 @@
  * @Author: Adxiong
  * @Date: 2022-05-14 09:29:36
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-16 23:17:39
+ * @LastEditTime: 2022-05-21 16:59:15
  */
 
+import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu } from 'antd';
 import { EditorState, RichUtils } from 'draft-js';
-import { BaseSyntheticEvent, useState } from 'react';
+import { MenuInfo } from 'rc-menu/lib/interface';
+import { BaseSyntheticEvent, useCallback, useState } from 'react';
 import commonStyle from '../../common/commonToolbar.module.less';
 
 interface Props {
@@ -24,54 +27,46 @@ interface SubmenuMapType {
 
 const List = (props: Props) => {
   const { onChange, editorState } = props;
-  const [showSubmenu, setShowSubmenu] = useState<boolean>(false);
-  const handleShowSubmenuClick = (e: BaseSyntheticEvent) => {
-    e.preventDefault();
-    setShowSubmenu(!showSubmenu);
-  };
-  const submenuMap: SubmenuMapType[] = [
-    {
-      title: '有序列表',
-      icon: 'icon-youxuliebiao',
-      command: 'ordered-list-item',
-    },
-    {
-      title: '无序列表',
-      icon: 'icon-wuxuliebiao',
-      command: 'unordered-list-item',
-    },
-  ];
+  const [visible, setVisible] = useState<boolean>(false);
 
-  const handleSubmenuClick = (e: BaseSyntheticEvent, command: string) => {
-    e.preventDefault();
-    onChange(RichUtils.toggleBlockType(editorState, command));
+  const handleClick = (info: MenuInfo) => {
+    onChange(RichUtils.toggleBlockType(editorState, info.key));
+  };
+  const renderArrow = useCallback(() => {
+    return visible ? <CaretUpOutlined /> : <CaretDownOutlined />;
+  }, [visible]);
+
+  const MenuItems = [
+    { label: '有序列表', key: 'ordered-list-item' },
+    { label: '无序列表', key: 'unordered-list-item' },
+  ];
+  const renderMenu = () => {
+    return <Menu items={MenuItems} onClick={handleClick}></Menu>;
+  };
+
+  const getCurrentListType = () => {
+    const entityKey = editorState.getSelection().getAnchorKey();
+    const type = editorState
+      .getCurrentContent()
+      .getBlockForKey(entityKey)
+      .getType();
+    if (type) {
+      for (let i = 0; i < MenuItems.length; i++) {
+        if (MenuItems[i].key == type) {
+          return MenuItems[i].label;
+        }
+      }
+    }
+    return '列表';
   };
   return (
     <div className={commonStyle.toolbarItem}>
-      <i className="iconfont icon-liebiao"></i>
-      <span onMouseDown={handleShowSubmenuClick}>
-        列表
-        <i
-          className={[
-            'iconfont',
-            `${showSubmenu ? 'icon-arrow-up' : 'icon-arrow-down'}`,
-          ].join(' ')}
-        />
-      </span>
-      {showSubmenu && (
-        <div className={commonStyle.submenu}>
-          {submenuMap.map((item: SubmenuMapType, index: number) => (
-            <div
-              className={commonStyle.submenuItem}
-              onMouseDown={(e) => handleSubmenuClick(e, item.command)}
-              key={index}
-            >
-              <i className={['iconfont', `${item.icon}`].join(' ')}></i>
-              <span>{item.title}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      <Dropdown overlay={renderMenu()}>
+        <Button>
+          {getCurrentListType()}
+          {renderArrow()}
+        </Button>
+      </Dropdown>
     </div>
   );
 };

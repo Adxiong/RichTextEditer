@@ -244,6 +244,13 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
+"@babel/runtime@^7.5.5":
+  version "7.18.0"
+  resolved "https://registry.npmmirror.com/@babel/runtime/-/runtime-7.18.0.tgz#6d77142a19cb6088f0af662af1ada37a604d34ae"
+  integrity sha512-YMQvx/6nKEaucl0MY56mwIG483xk8SDNdlUwb2Ts6FUpr7fm85DxEmsY18LXBNhcTz6tO6JwZV8w1W06v8UKeg==
+  dependencies:
+    regenerator-runtime "^0.13.4"
+
 "@babel/template@^7.16.7":
   version "7.16.7"
   resolved "https://registry.npmmirror.com/@babel/template/-/template-7.16.7.tgz"
@@ -337,7 +344,15 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@types/draft-js@^0.11.9":
+"@types/draft-convert@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.npmmirror.com/@types/draft-convert/-/draft-convert-2.1.4.tgz#8f32f86133eca5ddfede46d31a40ba6c964f605f"
+  integrity sha512-NbhE0ijzENK6ZQa3zO0KK6cNS80XESnQ03Bg7DEzE/qBg6YvpIEni6vzruYCYPkm1Sc6z0K7XbtJu4p53elGdA==
+  dependencies:
+    "@types/draft-js" "*"
+    "@types/react" "*"
+
+"@types/draft-js@*", "@types/draft-js@^0.11.9":
   version "0.11.9"
   resolved "https://registry.npmmirror.com/@types/draft-js/-/draft-js-0.11.9.tgz"
   integrity sha512-cQJBZjjIlGaPA1tOY+wGz2KhlPtAAZOIXpUvGPxPRw5uzZ2tcj8m6Yu1QDV9YgP36+cqE3cUvgkARBzgUiuI/Q==
@@ -570,6 +585,15 @@ dom-align@^1.7.0:
   version "1.12.3"
   resolved "https://registry.npmmirror.com/dom-align/-/dom-align-1.12.3.tgz"
   integrity sha512-Gj9hZN3a07cbR6zviMUBOMPdWxYhbMI+x+WS0NAIu2zFZmbK8ys9R79g+iG9qLnlCwpFoaB+fKy8Pdv470GsPA==
+
+draft-convert@^2.1.12:
+  version "2.1.12"
+  resolved "https://registry.npmmirror.com/draft-convert/-/draft-convert-2.1.12.tgz#ef77b4d2bf416c1aea2916662e3fa669916644e9"
+  integrity sha512-6Bt338J+ZA00OLlzHipd0ZcQCCrVEM0vCyXb/eDlLdY89mmQ4XWkflSD9vql8TzVJ5ENk4s8cywMO9YTaTnZyg==
+  dependencies:
+    "@babel/runtime" "^7.5.5"
+    immutable "~3.7.4"
+    invariant "^2.2.1"
 
 draft-js@^0.11.7:
   version "0.11.7"
@@ -810,6 +834,13 @@ immutable@~3.7.4:
   version "3.7.6"
   resolved "https://registry.npmmirror.com/immutable/-/immutable-3.7.6.tgz"
   integrity sha512-AizQPcaofEtO11RZhPPHBOJRdo/20MKQF9mBLnVkBoyHi1/zXK8fzVdnEpSV9gxqtnh6Qomfp3F0xT5qP/vThw==
+
+invariant@^2.2.1:
+  version "2.2.4"
+  resolved "https://registry.npmmirror.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
+  integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
+  dependencies:
+    loose-envify "^1.0.0"
 
 is-core-module@^2.8.1:
   version "2.9.0"

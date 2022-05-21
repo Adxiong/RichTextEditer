@@ -4,11 +4,16 @@
  * @Author: Adxiong
  * @Date: 2022-05-09 23:00:09
  * @LastEditors: Adxiong
- * @LastEditTime: 2022-05-18 17:41:20
+ * @LastEditTime: 2022-05-20 15:46:22
  */
+import { Button } from 'antd';
+import { EditorState } from 'draft-js';
+import { useState } from 'react';
 import './App.css';
+import decorator from './components/Editor/decoratar';
 import Editor from './components/Editor/Editor';
 import { ToolbarParam } from './components/ToolBar/@types';
+import { convertToHTML } from 'draft-convert';
 
 function App() {
   const toolbar: ToolbarParam[] = [
@@ -43,10 +48,20 @@ function App() {
     'image',
     'video',
   ];
-
+  const [editorState, setEditorState] = useState(
+    EditorState.createEmpty(decorator)
+  );
+  const handleClick = () => {
+    console.log(convertToHTML(editorState.getCurrentContent()));
+  };
   return (
     <div className="App">
-      <Editor toolbar={toolbar}></Editor>
+      <Editor
+        editorState={editorState}
+        onChange={setEditorState}
+        toolbar={toolbar}
+      ></Editor>
+      <Button onClick={handleClick}>daochu</Button>
     </div>
   );
 }
